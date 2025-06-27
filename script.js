@@ -77,6 +77,9 @@ document
           const mealDiv = document.createElement("div");
           mealDiv.className = "meal";
 
+          // Make the meal clickable by adding a cursor pointer style
+          mealDiv.style.cursor = "pointer";
+
           // Create and set up the meal title
           const title = document.createElement("h3");
           title.textContent = meal.strMeal;
@@ -89,6 +92,11 @@ document
           // Add the title and image to the meal container
           mealDiv.appendChild(title);
           mealDiv.appendChild(img);
+
+          // Add click event listener to show recipe details when clicked
+          mealDiv.addEventListener("click", async function () {
+            await showRecipeDetails(meal.idMeal);
+          });
 
           // Add the meal container to the results area
           resultsDiv.appendChild(mealDiv);
@@ -103,3 +111,65 @@ document
       resultsDiv.textContent = "Error loading meals. Please try again.";
     }
   });
+
+// Function to fetch and display detailed recipe information in a modal
+async function showRecipeDetails(mealId) {
+  try {
+    // Fetch detailed recipe information using the meal ID
+    const response = await fetch(
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`
+    );
+
+    // Convert the response to JSON format
+    const data = await response.json();
+
+    // Check if we got meal data back from the API
+    if (data.meals && data.meals[0]) {
+      const meal = data.meals[0];
+
+      // Get the modal elements from the HTML
+      const modalTitle = document.getElementById("recipeModalLabel");
+      const modalBody = document.getElementById("recipeModalBody");
+
+      // Set the modal title to the recipe name
+      modalTitle.textContent = meal.strMeal;
+
+      // Split instructions into individual steps and create bullet points
+      const instructions = meal.strInstructions
+        .split(/\r\n|\n|\. /) // Split by line breaks or periods followed by space
+        .filter((step) => step.trim() !== "") // Remove empty steps
+        .map((step) => step.trim()); // Clean up whitespace
+
+      // Create bullet points for each instruction step
+      let instructionsList = "";
+      instructions.forEach((step) => {
+        if (step.length > 0) {
+          instructionsList += `<li>${step}</li>`;
+        }
+      });
+
+      // Create the modal content using template literals
+      modalBody.innerHTML = `
+        <div class="text-center mb-3">
+          <img src="${meal.strMealThumb}" alt="${meal.strMeal}" class="img-fluid rounded" style="max-height: 300px;">
+        </div>
+        <h5>Category:</h5>
+        <p>${meal.strCategory}</p>
+        <h5>Area:</h5>
+        <p>${meal.strArea}</p>
+        <h5>Instructions:</h5>
+        <ul class="text-start instruction-list">
+          ${instructionsList}
+        </ul>
+      `;
+
+      // Show the Bootstrap modal
+      const modal = new bootstrap.Modal(document.getElementById("recipeModal"));
+      modal.show();
+    }
+  } catch (error) {
+    // Handle any errors that might occur during the fetch
+    console.error("Error fetching recipe details:", error);
+    alert("Error loading recipe details. Please try again.");
+  }
+}

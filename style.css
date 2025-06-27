@@ -1,23 +1,35 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f8f9fa;
+  background: #30336b;
   margin: 0;
   padding: 0;
+  color: #dff9fb;
 }
 
 h1 {
   text-align: center;
   margin-top: 24px;
-  color: #333;
+  color: #dff9fb;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(223, 249, 251, 0.1);
 }
 
 #area-select {
   display: block;
   margin: 24px auto 32px auto;
-  padding: 8px 16px;
+  padding: 12px 16px;
   font-size: 1rem;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+  border-radius: 8px;
+  border: 2px solid #95afc0;
+  background: #fff;
+  color: #130f40;
+  transition: all 0.3s ease;
+}
+
+#area-select:focus {
+  outline: none;
+  border-color: #535c68;
+  box-shadow: 0 0 0 3px rgba(149, 175, 192, 0.3);
 }
 
 #results {
@@ -29,34 +41,72 @@ h1 {
 }
 
 .meal {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-  padding: 16px;
+  background: #130f40;
+  font: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 20px;
   width: 220px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: box-shadow 0.2s;
+  transition: all 0.3s ease;
+  border: 1px solid #95afc0;
 }
 
 .meal:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  transform: translateY(-4px);
+  border-color: #535c68;
 }
 
 .meal img {
   width: 180px;
   height: 120px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 8px;
   margin-bottom: 12px;
+  border: 2px solid #535c68;
 }
 
 .meal h3 {
   font-size: 1.1rem;
   margin: 0;
-  color: #222;
+  color: #130f40;
   text-align: center;
   word-break: break-word;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Modal styling with custom colors */
+.modal-content {
+  background: #30336b !important;
+  border: 2px solid #95afc0;
+}
+
+.modal-header {
+  border-bottom: 1px solid #535c68;
+}
+
+.modal-title {
+  color: #dff9fb !important;
+}
+
+.modal-body {
+  color: #dff9fb !important;
+}
+
+.modal-body h5 {
+  color: #95afc0 !important;
+  font-weight: bold;
+}
+
+.modal-footer {
+  border-top: 1px solid #535c68;
+}
+
+.btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
 }
