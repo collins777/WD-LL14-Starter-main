@@ -33,20 +33,38 @@ h1 {
 }
 
 #results {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Make responsive for smaller screens */
+@media (max-width: 992px) {
+  #results {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  #results {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  #results {
+    grid-template-columns: 1fr;
+  }
 }
 
 .meal {
   background: #130f40;
-  font: white;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  width: 220px;
   display: flex;
   flex-direction: column;
   align-items: center;
